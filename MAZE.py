@@ -83,8 +83,10 @@ def Draw_Board(current=None):
 
 
 def Make_Maze(Nodes = Nodes):
+    # we need to create empty stack
     stack = []
 
+    # algorithm starts in left-upper corner
     stack.append(0)
 
     while len(stack) > 0:
@@ -92,19 +94,20 @@ def Make_Maze(Nodes = Nodes):
 
         Draw_Board(stack[-1])
 
-        #time.sleep(0.01)
-
+        # if node's neighbours are visited we have to go back
         print(Nodes[stack[-1]].Neighbours," : ",stack[-1])
         if len(Nodes[stack[-1]].Neighbours) == list(Nodes[i].visited for i in Nodes[stack[-1]].Neighbours).count(True):
             Nodes[stack[-1]].visited = True
             stack.pop(-1)
             continue
         
+        # picking random not visited neighbour
         _random = random.choice(Nodes[stack[-1]].Neighbours)
 
         while Nodes[_random].visited:
             _random = random.choice(Nodes[stack[-1]].Neighbours)
         
+        # setting conenction between two nodes
         Nodes[_random].connected.append(stack[-1])
         Nodes[stack[-1]].connected.append(_random)
 
@@ -112,7 +115,6 @@ def Make_Maze(Nodes = Nodes):
 
         stack.append(_random)
 
-    print("END")
     return True
         
 
