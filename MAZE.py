@@ -2,6 +2,7 @@ import pygame
 import time
 import random
 import os
+import sys
 
 # maze node's class 
 class Node:
@@ -95,7 +96,7 @@ def Make_Maze(Nodes = Nodes):
         Draw_Board(stack[-1])
 
         # if node's neighbours are visited we have to go back
-        print(Nodes[stack[-1]].Neighbours," : ",stack[-1])
+
         if len(Nodes[stack[-1]].Neighbours) == list(Nodes[i].visited for i in Nodes[stack[-1]].Neighbours).count(True):
             Nodes[stack[-1]].visited = True
             stack.pop(-1)
@@ -115,6 +116,14 @@ def Make_Maze(Nodes = Nodes):
 
         stack.append(_random)
 
+        # loop checking if close button wasn't clicked
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+                return False
+                break
+
     return True
         
 
@@ -130,6 +139,8 @@ while run:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            run = False
+            pygame.quit()
+            sys.quit()
+            break
 
 
